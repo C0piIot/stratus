@@ -1,0 +1,7 @@
+# Everything is ignored and the workspace's own files are named back in, so a
+# sibling repo cloned in here -- backend/, and the app repos to come -- never
+# turns up as an embedded repository in this one.
+/*
+!/.gitignore
+!/CLAUDE.md
+!/README.md
