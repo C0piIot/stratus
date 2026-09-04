@@ -37,7 +37,7 @@ Repos in this workspace:
 
 | Protocol | Use | Clients |
 |---|---|---|
-| WebDAV | files, photo upload, generic sync | rclone, Finder, Nautilus, DAVx5, FolderSync |
+| WebDAV | files, photo upload, generic sync | rclone, Finder, Nautilus, FolderSync |
 | CalDAV | calendar | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
@@ -74,10 +74,13 @@ a lost update is the strong ETag and `If-Match`.
   This is not documentation hygiene. A self-hosted project is judged in its first
   five minutes, and a README that promises a protocol that does not answer, or
   an image size that is three times off, costs more trust than the feature it was
-  advertising was worth. It has drifted five times already: the SQLite DSN, the
+  advertising was worth. It has drifted six times already: the SQLite DSN, the
   ffmpeg-optional line, the WebDAV client table, "greenfield" long after it
-  stopped being greenfield, and the image size — advertised at ~55 MB while the
-  real thing is 145 MB, which is the very example this paragraph uses.
+  stopped being greenfield, the image size — advertised at ~55 MB while the real
+  thing is 145 MB, which is the very example this paragraph uses — and that
+  client table a second time, listing DAVx5 against photo backup when it does no
+  such thing. Twice in the same table: when a row says which clients work, check
+  that they do the job the row claims and not merely the protocol.
 
 ## Status
 
