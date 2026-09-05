@@ -86,8 +86,8 @@ a lost update is the strong ETag and `If-Match`.
 
 Single user, and usable from a WebDAV client.
 
-- Workspace: https://github.com/C0piIot/stratus (private)
-- Backend: https://github.com/C0piIot/stratus-backend (private)
+- Workspace: https://github.com/C0piIot/stratus
+- Backend: https://github.com/C0piIot/stratus-backend
 - Board: https://github.com/users/C0piIot/projects/2
 
 Working:
