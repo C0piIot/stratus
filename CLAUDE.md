@@ -97,9 +97,10 @@ Working:
   disk and s3 for blobs, sqlite and postgres for metadata.
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
-- OpenSubsonic at `/rest/`, browsing by tag and by folder and streaming, over
-  both of the protocol's authentication schemes and sharing that same rate
-  limit. No real client has been pointed at it yet, so the README says so.
+- OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
+  lists a home screen is made of, and streaming -- over both of the protocol's
+  authentication schemes and sharing that same rate limit. No real client has
+  been pointed at it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes.
@@ -108,8 +109,7 @@ Working:
   runtime, data-directory and configuration failure matrices.
 
 Not written yet: CalDAV, the web UI, thumbnails and sharing. Nor, on the music
-side, search and the album lists a client's home screen is made of, cover art,
-or anything that remembers what the user did.
+side, cover art or anything that remembers what the user did.
 
 The board carries a `Priority` field for when, and a `decision` label for the
 issues that need a call before anyone can start.
