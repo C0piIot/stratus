@@ -98,18 +98,20 @@ Working:
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
-  lists a home screen is made of, and streaming -- over both of the protocol's
-  authentication schemes and sharing that same rate limit. No real client has
-  been pointed at it yet, so the README says so.
+  lists a home screen is made of, streaming, and cover art -- over both of the
+  protocol's authentication schemes and sharing that same rate limit. No real
+  client has been pointed at it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
-- A media indexer extracting EXIF, audio tags and video probes.
+- A media indexer extracting EXIF, audio tags and video probes, and thumbnails
+  made on first request and kept as derived blobs the same sweep collects.
 - Migrations applied at startup, a request log, and a container asserted from
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV, the web UI, thumbnails and sharing. Nor, on the music
-side, cover art or anything that remembers what the user did.
+Not written yet: CalDAV, the web UI and sharing. Nor thumbnails of what only
+ffmpeg can decode -- HEIC and video -- or anything that remembers what a user
+did.
 
 The board carries a `Priority` field for when, and a `decision` label for the
 issues that need a call before anyone can start.
