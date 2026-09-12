@@ -41,7 +41,7 @@ Repos in this workspace:
 | CalDAV | calendar | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
-| Web UI | login, browse, download and upload files today; the calendar later | any browser |
+| Web UI | login, browse, upload, download, rename and delete files today; the calendar later | any browser |
 | CardDAV | contacts | *later* |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
@@ -105,16 +105,19 @@ Working:
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes, and thumbnails
   made on first request and kept as derived blobs the same sweep collects.
-- A web UI at `/`: sign in, walk the tree, download a file, upload one. The
-  upload streams into the blob store and replaces like a PUT does. The session is
+- A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
+  folder, rename and delete. The upload streams into the blob store and replaces
+  like a PUT does; deleting asks first, because there is no trash bin. The
+  session is
   signed rather than stored, keyed by the configured password, so changing it
   revokes every cookie already issued and a restart revokes none.
 - Migrations applied at startup, a request log, and a container asserted from
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV, the rest of the web UI -- making a folder and the
-calendar -- and sharing. Nor thumbnails of what only ffmpeg can
+Not written yet: CalDAV and the calendar view over it, and sharing. Nor renaming
+a folder that has anything in it, which no surface can do: moving a directory is
+a rewrite of every path under it. Nor thumbnails of what only ffmpeg can
 decode -- HEIC and video -- or anything that remembers what a user did.
 
 The board carries a `Priority` field for when, and a `decision` label for the
