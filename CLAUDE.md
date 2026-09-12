@@ -41,7 +41,7 @@ Repos in this workspace:
 | CalDAV | calendar | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
-| Web UI | login today; browse and download files, view the calendar | any browser |
+| Web UI | login, browse and download files today; the calendar later | any browser |
 | CardDAV | contacts | *later* |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
@@ -105,15 +105,15 @@ Working:
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes, and thumbnails
   made on first request and kept as derived blobs the same sweep collects.
-- A web UI at `/`, which today signs you in and out: a session signed rather
-  than stored, keyed by the configured password, so changing it revokes every
-  cookie already issued and a restart revokes none.
+- A web UI at `/`: sign in, walk the tree, download a file. The session is
+  signed rather than stored, keyed by the configured password, so changing it
+  revokes every cookie already issued and a restart revokes none.
 - Migrations applied at startup, a request log, and a container asserted from
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV, the rest of the web UI -- browsing, downloading,
-uploading, the calendar -- and sharing. Nor thumbnails of what only ffmpeg can
+Not written yet: CalDAV, the rest of the web UI -- uploading and the calendar --
+and sharing. Nor thumbnails of what only ffmpeg can
 decode -- HEIC and video -- or anything that remembers what a user did.
 
 The board carries a `Priority` field for when, and a `decision` label for the
