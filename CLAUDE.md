@@ -4,28 +4,38 @@ Self-hosted personal cloud: photo backup, calendar, music and video.
 Same goals as Nextcloud, radically fewer moving parts.
 
 This repository is the workspace: what binds every Stratus repo, and nothing
-that belongs to one of them. The backend's own half -- its architecture, its
-configuration, its abstractions and its tech decisions -- lives in
-[`backend/CLAUDE.md`](backend/CLAUDE.md), so that a change to the code and the
-paragraph describing it are the same pull request. Claude Code reads both, since
-it merges the file from every parent directory.
+that belongs to one of them. Each repo's own half -- its architecture, its
+configuration, its abstractions and its tech decisions -- lives in that repo's
+own `CLAUDE.md`, so that a change to the code and the paragraph describing it
+are the same pull request. Claude Code reads both, since it merges the file from
+every parent directory.
 
 Repos in this workspace:
 
 | directory | repo | what it is |
 |---|---|---|
 | `backend/` | `stratus-backend` | the server: one Go binary, one container |
+| `app/` | `stratus-app` | the iOS and Android client: one Kotlin Multiplatform codebase |
 
 ## Non-negotiable principles
 
 1. **One binary, one container.** No Redis, no separate web server, no PHP, no
    external job queue. Background work is goroutines inside the same process.
 2. **Reuse existing protocols instead of inventing APIs.** Every feature we ship
-   should be usable from clients that already exist. We do not write mobile apps.
-   The web UI is not an exception to this: it is server-rendered HTML for the most
-   universal existing client there is. It consumes the same internals as the
-   protocol handlers and **must never grow a private JSON API for its own use** --
-   that is how this principle gets broken quietly.
+   should be usable from clients that already exist. The web UI is not an
+   exception to this: it is server-rendered HTML for the most universal existing
+   client there is. It consumes the same internals as the protocol handlers and
+   **must never grow a private JSON API for its own use** -- that is how this
+   principle gets broken quietly.
+
+   This principle used to end with "we do not write mobile apps", and
+   `stratus-app` is the single exception we have granted it, conditionally.
+   Automatic camera-roll backup is the one thing no existing client does for
+   free on iOS, and it is what a personal cloud gets judged on. The condition is
+   that the app speaks **only standard protocols and stays useful against any
+   WebDAV server**, so it can never become the reason to add a Stratus-only
+   endpoint here. The day an app feature would be easiest to satisfy with a
+   private API is the day this principle is actually on the line.
 3. **Pluggable at exactly two seams:** metadata database and blob storage. Nothing
    else gets an abstraction layer "just in case".
 4. **Single user for now**, sharing later. Don't hardcode assumptions that block it:
@@ -89,6 +99,7 @@ OpenSubsonic.
 
 - Workspace: https://github.com/C0piIot/stratus
 - Backend: https://github.com/C0piIot/stratus-backend
+- App: https://github.com/C0piIot/stratus-app
 - Board: https://github.com/users/C0piIot/projects/2
 
 Working:
@@ -119,6 +130,15 @@ Not written yet: CalDAV and the calendar view over it, and sharing. Nor renaming
 a folder that has anything in it, which no surface can do: moving a directory is
 a rewrite of every path under it. Nor thumbnails of what only ffmpeg can
 decode -- HEIC and video -- or anything that remembers what a user did.
+
+`stratus-app` exists but holds no code yet: only the decisions, chief among them
+that it negotiates its upload transport -- plain WebDAV `PUT` against any server,
+[tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
+a large video over mobile data therefore never finishes. tus is not implemented
+on the server either, so today the app has nothing to negotiate up to. Note where
+the two repos meet: the app uploads HEIC originals and never transcodes, so the
+missing HEIC thumbnails above stop being a backlog item and become the first
+thing anybody sees.
 
 The board carries a `Priority` field for when, and a `decision` label for the
 issues that need a call before anyone can start.
