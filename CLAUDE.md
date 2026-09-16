@@ -104,8 +104,8 @@ OpenSubsonic.
 
 Working:
 
-- Both seams, each with two drivers and a conformance suite they both pass:
-  disk and s3 for blobs, sqlite and postgres for metadata.
+- Both seams, each with a conformance suite every one of its drivers passes:
+  disk and s3 for blobs, sqlite, postgres and mysql for metadata.
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
