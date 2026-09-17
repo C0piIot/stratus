@@ -137,14 +137,23 @@ a folder that has anything in it, which no surface can do: moving a directory is
 a rewrite of every path under it. Nor thumbnails of what only ffmpeg can
 decode -- HEIC and video -- or anything that remembers what a user did.
 
-`stratus-app` exists but holds no code yet: only the decisions, chief among them
-that it negotiates its upload transport -- plain WebDAV `PUT` against any server,
+`stratus-app` signs in, browses and knows what the server already holds; it does
+not yet upload anything, which is the one thing it exists to do. A Kotlin
+Multiplatform project with the decisions in shared code and the platform layer as
+thin as it can be made, a WebDAV client proved against a real backend in CI, a
+sign-in that asks before a password would travel in clear, a file browser, and a
+cache of what is backed up that can be rebuilt by walking the server -- because
+the remote path is a function of the photograph, so losing the cache costs time
+and never a second upload of somebody's camera roll.
+
+Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 [tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
 a large video over mobile data therefore never finishes. The server implements
-tus now (stratus-backend#122), so the negotiation has something to find. Note
-where the two repos meet: the app uploads HEIC originals and never transcodes, so the
-missing HEIC thumbnails above stop being a backlog item and become the first
-thing anybody sees.
+tus now (stratus-backend#122), so the negotiation has something to find.
+
+Note where the two repos meet: the app uploads HEIC originals and never
+transcodes, so the missing HEIC thumbnails above stop being a backlog item and
+become the first thing anybody sees.
 
 The board carries a `Priority` field for when, and a `decision` label for the
 issues that need a call before anyone can start.
