@@ -124,7 +124,10 @@ Working:
   made on first request and kept as derived blobs the same sweep collects.
 - A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
   folder, rename and delete. The upload streams into the blob store and replaces
-  like a PUT does; deleting asks first, because there is no trash bin. The
+  like a PUT does; deleting asks first, because there is no trash bin. A folder
+  arrives a hundred rows at a time, paged by a cursor rather than an offset, and
+  the rest of it loads as you scroll -- or as a plain link to the next page with
+  JavaScript turned off, which is the condition htmx was let in under. The
   session is
   signed rather than stored, keyed by the configured password, so changing it
   revokes every cookie already issued and a restart revokes none.
@@ -132,10 +135,9 @@ Working:
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV and the calendar view over it, and sharing. Nor renaming
-a folder that has anything in it, which no surface can do: moving a directory is
-a rewrite of every path under it. Nor thumbnails of what only ffmpeg can
-decode -- HEIC and video -- or anything that remembers what a user did.
+Not written yet: CalDAV and the calendar view over it, and sharing. Nor
+thumbnails of what only ffmpeg can decode -- HEIC and video -- or anything that
+remembers what a user did.
 
 `stratus-app` signs in, browses and knows what the server already holds; it does
 not yet upload anything, which is the one thing it exists to do. A Kotlin
