@@ -48,6 +48,7 @@ Repos in this workspace:
 | Protocol | Use | Clients |
 |---|---|---|
 | WebDAV | files, photo upload, generic sync | rclone, Finder, Nautilus, FolderSync |
+| tus | resumable upload of large files, negotiated | tus-js-client, TUSKit, tus-android-client |
 | CalDAV | calendar | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
@@ -106,6 +107,11 @@ Working:
 
 - Both seams, each with a conformance suite every one of its drivers passes:
   disk and s3 for blobs, sqlite, postgres and mysql for metadata.
+- Resumable uploads over tus at `/tus/`, because a `PUT` is all or nothing and a
+  large video on a mobile connection never finishes without them. The storage
+  port grew a second half for it -- start, append, ask, complete, abort -- that
+  both blob drivers honour truthfully, and an upload in progress is a row so it
+  survives a restart. No tus client library has been pointed at it yet.
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
@@ -134,9 +140,9 @@ decode -- HEIC and video -- or anything that remembers what a user did.
 `stratus-app` exists but holds no code yet: only the decisions, chief among them
 that it negotiates its upload transport -- plain WebDAV `PUT` against any server,
 [tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
-a large video over mobile data therefore never finishes. tus is not implemented
-on the server either, so today the app has nothing to negotiate up to. Note where
-the two repos meet: the app uploads HEIC originals and never transcodes, so the
+a large video over mobile data therefore never finishes. The server implements
+tus now (stratus-backend#122), so the negotiation has something to find. Note
+where the two repos meet: the app uploads HEIC originals and never transcodes, so the
 missing HEIC thumbnails above stop being a backlog item and become the first
 thing anybody sees.
 
