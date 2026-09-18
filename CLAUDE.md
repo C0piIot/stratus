@@ -111,7 +111,9 @@ Working:
   large video on a mobile connection never finishes without them. The storage
   port grew a second half for it -- start, append, ask, complete, abort -- that
   both blob drivers honour truthfully, and an upload in progress is a row so it
-  survives a restart. No tus client library has been pointed at it yet.
+  survives a restart. `stratus-app` is the first client pointed at it: it
+  negotiates, uploads and resumes against the shipped image in its own CI. No
+  third-party tus library has been.
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
@@ -143,19 +145,21 @@ Not written yet: CalDAV and the calendar view over it, and sharing. Nor
 thumbnails of what only ffmpeg can decode -- HEIC and video -- or anything that
 remembers what a user did.
 
-`stratus-app` signs in, browses and knows what the server already holds; it does
-not yet upload anything, which is the one thing it exists to do. A Kotlin
-Multiplatform project with the decisions in shared code and the platform layer as
-thin as it can be made, a WebDAV client proved against a real backend in CI, a
-sign-in that asks before a password would travel in clear, a file browser, and a
-cache of what is backed up that can be rebuilt by walking the server -- because
-the remote path is a function of the photograph, so losing the cache costs time
-and never a second upload of somebody's camera roll.
+`stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
+photo library and the background transport are the remaining half
+(stratus-app#20). A Kotlin Multiplatform project with the decisions in shared
+code and the platform layer as thin as it can be made, a WebDAV client proved
+against a real backend in CI, a sign-in that asks before a password would travel
+in clear, a file browser, more than one server at a time with its own backup
+settings each, and a cache of what is backed up that can be rebuilt by walking
+the server -- because the remote path is a function of the photograph, so losing
+the cache costs time and never a second upload of somebody's camera roll.
 
 Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 [tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
-a large video over mobile data therefore never finishes. The server implements
-tus now (stratus-backend#122), so the negotiation has something to find.
+a large video over mobile data therefore never finishes. One `OPTIONS` per backup
+pass decides which of the two runs, so a server that gains or loses tus is
+addressed the right way on the next pass rather than after a cache is cleared.
 
 Note where the two repos meet: the app uploads HEIC originals and never
 transcodes, so the missing HEIC thumbnails above stop being a backlog item and
