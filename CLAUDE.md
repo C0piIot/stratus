@@ -120,8 +120,12 @@ Working:
   client has been pointed at it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
-- A media indexer extracting EXIF, audio tags and video probes, and thumbnails
-  made on first request and kept as derived blobs the same sweep collects.
+- A media indexer extracting EXIF, audio tags and video probes, started by the
+  upload itself rather than found on the next pass, with `/status` reporting how
+  much of the library has been read. An MP4 or QuickTime video is read where it
+  lies, over ranges, instead of being downloaded to be probed; every other
+  container still gets a local copy first. Thumbnails are made on first request
+  and kept as derived blobs the same sweep collects.
 - A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
   folder, rename and delete. The upload streams into the blob store and replaces
   like a PUT does; deleting asks first, because there is no trash bin. A folder
