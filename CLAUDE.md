@@ -57,9 +57,10 @@ Repos in this workspace:
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
-and answers `LOCK`/`UNLOCK` with a token nothing records. Two clients writing
-the same file are not protected — they never were — and the real defence against
-a lost update is the strong ETag and `If-Match`.
+and the locks are real: exclusive write locks, `423` to whoever else writes,
+and an `If` header that is honoured down to its `ETag` conditions. They live
+in memory, so a restart drops every one of them — the strong ETag and
+`If-Match` are what survives that.
 
 ## Working agreements
 
