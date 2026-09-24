@@ -122,6 +122,9 @@ Working:
   songs, albums and artists, play counts from `scrobble`, and playlists -- over
   both of the protocol's authentication schemes and sharing that same rate
   limit. No real client has been pointed at it yet, so the README says so.
+- The same playlists as generated `.m3u8` files at `/playlists/`, a read-only
+  WebDAV mount of their own so that nothing generated can collide with a file
+  in the user's tree.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes, started by the
