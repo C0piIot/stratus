@@ -118,7 +118,8 @@ Working:
 - WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
-  lists a home screen is made of, streaming, and cover art -- over both of the
+  lists a home screen is made of, streaming, cover art, and stars and ratings
+  on songs, albums and artists -- over both of the
   protocol's authentication schemes and sharing that same rate limit. No real
   client has been pointed at it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
@@ -143,8 +144,8 @@ Working:
   runtime, data-directory and configuration failure matrices.
 
 Not written yet: CalDAV and the calendar view over it, and sharing. Nor
-thumbnails of what only ffmpeg can decode -- HEIC and video -- or anything that
-remembers what a user did.
+thumbnails of what only ffmpeg can decode -- HEIC and video -- or play counts
+and playlists.
 
 `stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
 photo library and the background transport are the remaining half
