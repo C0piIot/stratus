@@ -119,9 +119,9 @@ Working:
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
   lists a home screen is made of, streaming, cover art, and stars and ratings
-  on songs, albums and artists -- over both of the
-  protocol's authentication schemes and sharing that same rate limit. No real
-  client has been pointed at it yet, so the README says so.
+  on songs, albums and artists -- over both of the protocol's authentication
+  schemes and sharing that same rate limit. No real client has been pointed at
+  it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes, started by the
