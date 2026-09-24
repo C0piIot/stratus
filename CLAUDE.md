@@ -119,9 +119,9 @@ Working:
   logins, mounted only when credentials are configured.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
   lists a home screen is made of, streaming, cover art, stars and ratings on
-  songs, albums and artists, and play counts from `scrobble` -- over both of the
-  protocol's authentication schemes and sharing that same rate limit. No real client has been pointed at
-  it yet, so the README says so.
+  songs, albums and artists, play counts from `scrobble`, and playlists -- over
+  both of the protocol's authentication schemes and sharing that same rate
+  limit. No real client has been pointed at it yet, so the README says so.
 - `internal/files` holding the blob-plus-row invariant, and a background sweep
   that collects the blobs an overwrite leaves behind.
 - A media indexer extracting EXIF, audio tags and video probes, started by the
@@ -144,7 +144,7 @@ Working:
   runtime, data-directory and configuration failure matrices.
 
 Not written yet: CalDAV and the calendar view over it, and sharing. Nor
-thumbnails of what only ffmpeg can decode -- HEIC and video -- or playlists.
+thumbnails of what only ffmpeg can decode -- HEIC and video.
 
 `stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
 photo library and the background transport are the remaining half
