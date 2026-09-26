@@ -142,12 +142,17 @@ Working:
   session is
   signed rather than stored, keyed by the configured password, so changing it
   revokes every cookie already issued and a restart revokes none.
+- A photo gallery at `/gallery/photos`: every image, newest first by the
+  camera's date and grouped by month, read from the index rather than the tree,
+  with a viewer that steps to the photos either side. The same photos are
+  folders by date at `/photos/<year>/<month>/`, a read-only WebDAV mount of
+  their own like `/playlists/`, serving the originals.
 - Migrations applied at startup, a request log, and a container asserted from
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV and the calendar view over it, and sharing. Nor
-thumbnails of what only ffmpeg can decode -- HEIC and video.
+Not written yet: CalDAV and the calendar view over it, and sharing. Nor the
+music and video halves of the web UI's library, which follow the gallery.
 
 `stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
 photo library and the background transport are the remaining half
@@ -166,8 +171,9 @@ pass decides which of the two runs, so a server that gains or loses tus is
 addressed the right way on the next pass rather than after a cache is cleared.
 
 Note where the two repos meet: the app uploads HEIC originals and never
-transcodes, so the missing HEIC thumbnails above stop being a backlog item and
-become the first thing anybody sees.
+transcodes, so a HEIC's thumbnail -- made by ffmpeg on the server -- is the
+first thing anybody sees of a backed-up camera roll, in the gallery and in a
+listing alike.
 
 The board carries a `Priority` field for when, and a `decision` label for the
 issues that need a call before anyone can start.
