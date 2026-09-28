@@ -141,18 +141,25 @@ Working:
   JavaScript turned off, which is the condition htmx was let in under. The
   session is
   signed rather than stored, keyed by the configured password, so changing it
-  revokes every cookie already issued and a restart revokes none.
+  revokes every cookie already issued and a restart revokes none. That same
+  session opens every protocol surface from the UI's own pages -- the browser
+  must say the request is same-origin -- and Basic opens the UI, so a page can
+  call the protocols instead of growing an API of its own.
 - A photo gallery at `/gallery/photos`: every image, newest first by the
   camera's date and grouped by month, read from the index rather than the tree,
   with a viewer that steps to the photos either side. The same photos are
   folders by date at `/photos/<year>/<month>/`, a read-only WebDAV mount of
   their own like `/playlists/`, serving the originals.
+- A music library at `/music`: artists, their albums with covers, and an album
+  page with a player per track, read from the tags. A track played to the end
+  counts through OpenSubsonic's own `scrobble`, called by htmx with the session;
+  with JavaScript off it plays uncounted. One track at a time, no follow-on.
 - Migrations applied at startup, a request log, and a container asserted from
   outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
 Not written yet: CalDAV and the calendar view over it, and sharing. Nor the
-music and video halves of the web UI's library, which follow the gallery.
+video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
 photo library and the background transport are the remaining half
