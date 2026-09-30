@@ -58,9 +58,10 @@ Repos in this workspace:
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
 and the locks are real: exclusive write locks, `423` to whoever else writes,
-and an `If` header that is honoured down to its `ETag` conditions. They live
-in memory, so a restart drops every one of them — the strong ETag and
-`If-Match` are what survives that.
+and an `If` header that is honoured down to its `ETag` conditions. They are
+rows, so a restart keeps every one of them and a second instance on the same
+database honours them too; what a write holds for as long as it runs is a lease
+instead, so a process killed mid-`PUT` costs that one path a minute of `423`.
 
 ## Working agreements
 
