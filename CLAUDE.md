@@ -135,12 +135,14 @@ Working:
   container still gets a local copy first. Thumbnails are made on first request
   and kept as derived blobs the same sweep collects.
 - A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
-  folder, rename and delete. The upload streams into the blob store and replaces
-  like a PUT does; deleting asks first, because there is no trash bin. A folder
-  arrives a hundred rows at a time, paged by a cursor rather than an offset, and
-  the rest of it loads as you scroll -- or as a plain link to the next page with
-  JavaScript turned off, which is the condition htmx was let in under. The
-  session is
+  folder, rename and delete, and ask any file what is known about it -- the
+  file row's half and the indexer's, by kind, opened under the row when the
+  button is pressed and a page of its own without JavaScript. The upload streams
+  into the blob store and replaces like a PUT does; deleting asks first, because
+  there is no trash bin. A folder arrives a hundred rows at a time, paged by a
+  cursor rather than an offset, and the rest of it loads as you scroll -- or as
+  a plain link to the next page with JavaScript turned off, which is the
+  condition htmx was let in under. The session is
   signed rather than stored, keyed by the configured password, so changing it
   revokes every cookie already issued and a restart revokes none. That same
   session opens every protocol surface from the UI's own pages -- the browser
