@@ -136,18 +136,23 @@ Working:
   and kept as derived blobs the same sweep collects.
 - A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
   folder, rename and delete, and ask any file what is known about it -- the
-  file row's half and the indexer's, by kind, opened under the row when the
-  button is pressed and a page of its own without JavaScript. The upload streams
-  into the blob store and replaces like a PUT does; deleting asks first, because
-  there is no trash bin. A folder arrives a hundred rows at a time, paged by a
-  cursor rather than an offset, and the rest of it loads as you scroll -- or as
-  a plain link to the next page with JavaScript turned off, which is the
-  condition htmx was let in under. The session is
-  signed rather than stored, keyed by the configured password, so changing it
-  revokes every cookie already issued and a restart revokes none. That same
-  session opens every protocol surface from the UI's own pages -- the browser
-  must say the request is same-origin -- and Basic opens the UI, so a page can
-  call the protocols instead of growing an API of its own.
+  file row's half and the indexer's, by kind, fetched when the button is pressed
+  into a dialog titled with the file's name, and a page of its own without
+  JavaScript. The upload streams into the blob store and replaces like a PUT
+  does; deleting asks first, because there is no trash bin. A folder arrives a
+  hundred rows at a time, paged by a cursor rather than an offset, and the rest
+  of it loads as you scroll -- or as a plain link to the next page with
+  JavaScript turned off, which is the condition htmx was let in under. Its
+  headings order it by name, size or date and its row count is 50, 100 or 500,
+  both in the URL so an arranged folder is a link somebody can be sent, and both
+  kept in a cookie that is only a default;
+  folders stay at the top whichever way it points, which is what makes one index
+  serve a key in both directions. The session is signed rather than stored,
+  keyed by the configured password, so changing it revokes every cookie already
+  issued and a restart revokes none. That same session opens every protocol
+  surface from the UI's own pages -- the browser must say the request is
+  same-origin -- and Basic opens the UI, so a page can call the protocols
+  instead of growing an API of its own.
 - A photo gallery at `/gallery/photos`: every image, newest first by the
   camera's date and grouped by month, read from the index rather than the tree,
   with a viewer that steps to the photos either side. The same photos are
