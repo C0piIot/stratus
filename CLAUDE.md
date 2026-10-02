@@ -145,14 +145,24 @@ Working:
   JavaScript turned off, which is the condition htmx was let in under. Its
   headings order it by name, size or date and its row count is 50, 100 or 500,
   both in the URL so an arranged folder is a link somebody can be sent, and both
-  kept in a cookie that is only a default;
-  folders stay at the top whichever way it points, which is what makes one index
-  serve a key in both directions. The session is signed rather than stored,
-  keyed by the configured password, so changing it revokes every cookie already
-  issued and a restart revokes none. That same session opens every protocol
+  kept in a cookie that is only a default; folders stay at the top whichever
+  way it points, which is what makes one index serve a key in both directions.
+  The session is signed rather than stored, keyed by the configured password,
+  so changing it revokes every cookie already issued and a restart revokes
+  none. That same session opens every protocol
   surface from the UI's own pages -- the browser must say the request is
   same-origin -- and Basic opens the UI, so a page can call the protocols
-  instead of growing an API of its own.
+  instead of growing an API of its own. `/robots.txt` disallows the whole
+  server and every page says `noindex`, which is worth having for the one URL
+  no login protects: a share link nobody else is meant to have.
+- A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
+  itself into the library: the door for what speaks none of the protocols, a
+  scanner on a share or an SD card copied in. It is swept on an interval and a
+  file moves once two passes agree about its size; folders are mirrored, a name
+  already taken arrives as a copy beside the original rather than over it, and
+  anything that fails stays on disk and is counted on `/status`. It goes
+  through the same `files.Service.Write` a WebDAV `PUT` does, so what lands is
+  a file like any other.
 - A photo gallery at `/gallery/photos`: every image, newest first by the
   camera's date and grouped by month, read from the index rather than the tree,
   with a viewer that steps to the photos either side. The same photos are
