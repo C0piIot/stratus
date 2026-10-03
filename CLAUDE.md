@@ -161,17 +161,21 @@ Working:
   instead of growing an API of its own. `/robots.txt` disallows the whole
   server and every page says `noindex`, which is worth having for the one URL
   no login protects: a share link nobody else is meant to have.
-- A search box in the bar at the top, over the whole library: a file or a
-  folder by its **name** -- not its path, so a word in a folder finds the
-  folder and not what is under it -- and a track by its title, artist or album.
-  Whole words, in the order they were typed, ordered by path and paged by a
-  cursor; no ranking and no half-words, because what is promised has to be what
-  all three databases can do. **How the matching happens is each driver's
-  own**: a `tsvector` and GIN on PostgreSQL, `FULLTEXT` on MySQL, and FTS5
-  maintained by triggers on SQLite -- which is what taught the migration runner
-  to carry a trigger body, because the alternative turned a subtree move from
-  one statement into two per row. Photographs by what the camera recorded, and
-  artists and albums as results of their own, are not in it yet.
+- A search box in the bar at the top, over the whole library, answering five
+  shapes: a file or a folder by its **name** -- not its path, so a word in a
+  folder finds the folder and not what is under it -- a track by its **title**,
+  an artist, an album, and a photograph by the camera that took it or the year
+  it was taken. Whole words, in the order they were typed, paged by a cursor;
+  no ranking and no half-words, because what is promised has to be what all
+  three databases can do. A name is one line and not a discography: searching
+  an artist answers the artist, which is why the track half matches titles
+  alone. **How the matching happens is each driver's own**: a `tsvector` and
+  GIN on PostgreSQL, a `FULLTEXT` key per column on MySQL, and FTS5 maintained
+  by triggers on SQLite -- which is what taught the migration runner to carry a
+  trigger body, because the alternative turned a subtree move from one
+  statement into two per row. What is not in it is a place: a photograph knows
+  where it was taken as two numbers, and turning those into "Lisbon" is a
+  service somewhere else.
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
@@ -189,8 +193,10 @@ Working:
   page with a player per track, read from the tags. A track played to the end
   counts through OpenSubsonic's own `scrobble`, called by htmx with the session;
   with JavaScript off it plays uncounted. One track at a time, no follow-on.
-- Migrations applied at startup, a request log, and a container asserted from
-  outside by the smoke suite: static binary, no shell, non-root, hardened
+- One migration per engine, edited in place and applied at startup: before the
+  first release the schema is rewritten rather than migrated, so a database
+  from an older image is refused at startup instead of being run against. A
+  request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
 Not written yet: CalDAV and the calendar view over it, and sharing. Nor the
