@@ -42,6 +42,13 @@ Repos in this workspace:
    keep an owner id on records even while it is always the same value.
 5. **Minimal dependencies.** Prefer stdlib. Pure-Go / CGO-free build so the image
    can be `scratch` or distroless with a static binary.
+6. **One instance.** The server runs as a single process, and that is a
+   decision rather than a limitation nobody got round to: one user does not
+   need a second, and the things that would have to change to allow one --
+   locks, the login throttle, the indexer, the sweep, the scratch directory
+   each backend empties at startup -- cost more than the capacity is worth
+   here. The one place two processes do overlap is the few seconds of a rolling
+   deploy, which is why migrations still take the engine's own lock.
 
 ## Protocol surface
 
@@ -58,10 +65,9 @@ Repos in this workspace:
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
 and the locks are real: exclusive write locks, `423` to whoever else writes,
-and an `If` header that is honoured down to its `ETag` conditions. They are
-rows, so a restart keeps every one of them and a second instance on the same
-database honours them too; what a write holds for as long as it runs is a lease
-instead, so a process killed mid-`PUT` costs that one path a minute of `423`.
+and an `If` header that is honoured down to its `ETag` conditions. They live in
+the server's memory, so a restart forgets them -- a lock is a claim with a
+timeout measured in minutes, and a restart costs whoever held one a retry.
 
 ## Working agreements
 
