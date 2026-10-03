@@ -188,6 +188,16 @@ Working:
   rather than over it, and rebuilds the folders on the way. What does *not* go
   there is the version an overwrite replaced: that is versioning, and it would
   mean keeping a second copy of everything a phone re-uploads.
+
+  **The sweep puts what it cannot account for in there too**, in a section of
+  its own: a blob no row claims is as likely to be a database that went wrong
+  -- restored from a backup, pointed somewhere new -- as a file that rotted,
+  and no measurement tells the two apart. So it keeps the bytes for the same
+  month and says the number on `/status`, where it is a symptom rather than a
+  decision. Those cannot be put back, because what they were called was in the
+  index that went wrong; what the month buys is time to fix it. Thumbnails and
+  other generated files are still destroyed on sight, because they can be made
+  again.
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
