@@ -145,7 +145,7 @@ Working:
   file row's half and the indexer's, by kind, fetched when the button is pressed
   into a dialog titled with the file's name, and a page of its own without
   JavaScript. The upload streams into the blob store and replaces like a PUT
-  does; deleting asks first, because there is no trash bin. A folder arrives a
+  does; deleting asks first and then puts it in the trash. A folder arrives a
   hundred rows at a time, paged by a cursor rather than an offset, and the rest
   of it loads as you scroll -- or as a plain link to the next page with
   JavaScript turned off, which is the condition htmx was let in under. Its
@@ -176,6 +176,18 @@ Working:
   statement into two per row. What is not in it is a place: a photograph knows
   where it was taken as two numbers, and turning those into "Lisbon" is a
   service somewhere else.
+- A trash at `/trash`, because deleting a camera roll by accident is the one
+  mistake a personal cloud has to survive. A delete moves the rows into a table
+  of their own and **touches no bytes at all** -- the blob stays where it was
+  written, so deleting still costs nothing and frees nothing -- and the page
+  lists **deletions and not files**: a folder of a thousand photographs is one
+  line, named by the folder, with a button to put it back and one to destroy
+  it now. Thirty days otherwise, swept by the same pass that collects orphan
+  blobs, which has to count the trashed keys as referenced so it does not eat
+  them first. Restoring a name that has been taken since lands beside it
+  rather than over it, and rebuilds the folders on the way. What does *not* go
+  there is the version an overwrite replaced: that is versioning, and it would
+  mean keeping a second copy of everything a phone re-uploads.
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
