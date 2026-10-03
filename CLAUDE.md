@@ -161,9 +161,11 @@ Working:
   Whole words, in the order they were typed, ordered by path and paged by a
   cursor; no ranking and no half-words, because what is promised has to be what
   all three databases can do. **How the matching happens is each driver's
-  own**: a `tsvector` and GIN on PostgreSQL, `FULLTEXT` on MySQL, and a scan on
-  SQLite until the numbers earn FTS5. Photographs by what the camera recorded,
-  and artists and albums as results of their own, are not in it yet.
+  own**: a `tsvector` and GIN on PostgreSQL, `FULLTEXT` on MySQL, and FTS5
+  maintained by triggers on SQLite -- which is what taught the migration runner
+  to carry a trigger body, because the alternative turned a subtree move from
+  one statement into two per row. Photographs by what the camera recorded, and
+  artists and albums as results of their own, are not in it yet.
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
