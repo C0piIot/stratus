@@ -155,6 +155,15 @@ Working:
   instead of growing an API of its own. `/robots.txt` disallows the whole
   server and every page says `noindex`, which is worth having for the one URL
   no login protects: a share link nobody else is meant to have.
+- A search box in the bar at the top, over the whole library: a file or a
+  folder by its **name** -- not its path, so a word in a folder finds the
+  folder and not what is under it -- and a track by its title, artist or album.
+  Whole words, in the order they were typed, ordered by path and paged by a
+  cursor; no ranking and no half-words, because what is promised has to be what
+  all three databases can do. **How the matching happens is each driver's
+  own**: a `tsvector` and GIN on PostgreSQL, `FULLTEXT` on MySQL, and a scan on
+  SQLite until the numbers earn FTS5. Photographs by what the camera recorded,
+  and artists and albums as results of their own, are not in it yet.
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
