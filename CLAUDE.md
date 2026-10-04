@@ -122,8 +122,21 @@ Working:
   survives a restart. `stratus-app` is the first client pointed at it: it
   negotiates, uploads and resumes against the shipped image in its own CI. No
   third-party tus library has been.
-- WebDAV at `/dav/`, behind HTTP Basic with a global rate limit on failed
-  logins, mounted only when credentials are configured.
+
+  The filename it carries is **a path from the origin**, the same one a URL is
+  written in, so it begins with `files/`. tus has no opinion about this -- the
+  name travels as metadata with no prefix in front of it to say what it is
+  relative to -- which is how the one namespace below was made and this
+  surface left behind it, answering to a file by the other name until the app
+  tripped over it (stratus-backend#285).
+- **One WebDAV namespace for the whole origin**, behind HTTP Basic with a
+  global rate limit on failed logins, mounted only when credentials are
+  configured. The root is a read-only collection listing `files/`, `photos/`
+  and `playlists/`, and the user's tree is `/files/` -- which is the same URL
+  the web UI serves a folder and a file at. What tells the two protocols apart
+  is the method and nothing else: a browser cannot send `PROPFIND` and a
+  WebDAV client does not ask for a listing with `GET`. `/dav/` is gone, and
+  the price was paid once on purpose, before there was a release.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
   lists a home screen is made of, streaming, cover art, stars and ratings on
   songs, albums and artists, play counts from `scrobble`, and playlists -- over
@@ -239,6 +252,13 @@ Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 a large video over mobile data therefore never finishes. One `OPTIONS` per backup
 pass decides which of the two runs, so a server that gains or loses tus is
 addressed the right way on the next pass rather than after a cache is cleared.
+
+It is pointed at the **origin** rather than at a mount inside it, so its file
+browser sees the generated collections as well, and a camera roll lands in
+`files/phone_backup/<year>/<month>/` by default -- two segments, because the
+origin is read-only and the writable tree is one level down. It translates
+nothing between what it browses and what it uploads, and keeping that true is
+what stratus-backend#285 was about.
 
 Note where the two repos meet: the app uploads HEIC originals and never
 transcodes, so a HEIC's thumbnail -- made by ffmpeg on the server -- is the
