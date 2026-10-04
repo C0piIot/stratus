@@ -247,6 +247,23 @@ settings each, and a cache of what is backed up that can be rebuilt by walking
 the server -- because the remote path is a function of the photograph, so losing
 the cache costs time and never a second upload of somebody's camera roll.
 
+**A certificate nothing vouches for is a question on both platforms now**
+(stratus-app#58). Most self-hosted servers present one, so refusing outright
+would be refusing the normal case and accepting quietly would be worse than
+plain http -- the system's own validation runs first and unchanged, and only
+what it refused is weighed against a fingerprint somebody has vouched for, per
+`host:port`. The iOS half is proved against a real handshake on a simulator,
+which is the one test in either repo that needs a Mac: an
+`NSURLAuthenticationChallenge` cannot honestly be faked.
+
+**On Android the library is a storage location** (stratus-app#104): it is in
+the Files sidebar and in every picker, one entry per server, so any app can
+read from Stratus and save into it without knowing Stratus exists. Standard
+WebDAV underneath, so it works against any server, and reads go out as ranges
+-- a film opens by the part that is watched. It is **not** a mount: nothing
+appears under `/storage` and `java.io.File` never sees it. The iOS twin, a
+File Provider extension, is stratus-app#105.
+
 Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 [tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
 a large video over mobile data therefore never finishes. One `OPTIONS` per backup
