@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Stratus">
+  <title>Stratus</title>
+  <!-- Three strata, aligned to opposite sides so the silhouette reads as an S
+       without drawing the letter. currentColor so one file serves every place
+       the mark appears; the geometry is the whole source, there is no other. -->
+  <g fill="currentColor">
+    <rect x="26" y="14" width="28" height="9" rx="4.5"/>
+    <rect x="10" y="27" width="44" height="9" rx="4.5"/>
+    <rect x="10" y="40" width="28" height="9" rx="4.5"/>
+  </g>
+</svg>
