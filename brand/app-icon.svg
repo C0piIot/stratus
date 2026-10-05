@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Stratus">
+  <title>Stratus</title>
+  <!-- Full bleed and square: iOS masks the corners itself and Android's
+       adaptive icon masks whatever the launcher has decided on. The mark is
+       scaled to 616px so it stays inside Android's 66% safe circle, which is
+       the tighter of the two constraints. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aa0ec"/>
+      <stop offset="1" stop-color="#2c6fb5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#sky)"/>
+  <g transform="translate(64,71) scale(14)" fill="#ffffff">
+    <rect x="26" y="14" width="28" height="9" rx="4.5"/>
+    <rect x="10" y="27" width="44" height="9" rx="4.5"/>
+    <rect x="10" y="40" width="28" height="9" rx="4.5"/>
+  </g>
+</svg>
