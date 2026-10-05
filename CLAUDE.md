@@ -211,6 +211,29 @@ Working:
   index that went wrong; what the month buys is time to fix it. Thumbnails and
   other generated files are still destroyed on sight, because they can be made
   again.
+- **A Nextcloud instance adopted without moving a byte** (stratus-backend#24).
+  Nextcloud on S3 names its objects `urn:oid:<fileid>` and keeps the whole tree
+  in its database, exactly as this server does, so a migration is a read and a
+  batch of row inserts -- which only holds because a blob key here is an opaque
+  string the database owns and nothing on either side parses one. `stratus
+  import nextcloud` surveys by default and writes with `--write`, reading
+  whichever of SQLite, PostgreSQL or MySQL that instance runs on, each opened
+  read-only while it is still serving. Two things refuse it and the survey says
+  so first: server-side encryption, where the objects are ciphertext under keys
+  nobody here has, and a bucket per user. The rows carry **no ETag** unless one
+  is asked for, because Nextcloud keeps no hash of the content and an ETag here
+  means a SHA-256 of the bytes -- an absent one says "cannot verify", which is
+  the truth and is what the app already handles.
+
+  **The hazard is the sweep rather than the import**, which is why the survey
+  counts the other side of the bucket too: everything an instance holds that no
+  imported row claims -- previews, versions, trash, `appdata`, another user --
+  is unreferenced the moment the rows land, so the first pass puts it in the
+  trash and thirty days frees it. Usually that is what a migration wanted; it
+  is never what it wanted to find out a month later. On the one real instance
+  this has been run against it was **1358 objects**, almost all of them
+  generated previews, against 674 files worth keeping.
+
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
