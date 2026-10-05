@@ -237,8 +237,7 @@ Working:
 Not written yet: CalDAV and the calendar view over it, and sharing. Nor the
 video half of the web UI's library, which follows the music.
 
-`stratus-app` backs up a camera roll on Android, and not yet on iOS, where the
-photo library and the background transport are the remaining half
+`stratus-app` backs up a camera roll on **both** platforms now
 (stratus-app#20). A Kotlin Multiplatform project with the decisions in shared
 code and the platform layer as thin as it can be made, a WebDAV client proved
 against a real backend in CI, a sign-in that asks before a password would travel
@@ -276,6 +275,20 @@ Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 a large video over mobile data therefore never finishes. One `OPTIONS` per backup
 pass decides which of the two runs, so a server that gains or loses tus is
 addressed the right way on the next pass rather than after a cache is cleared.
+
+**On iOS the bytes leave through the system rather than through the app**, and
+that asymmetry is the platform's rather than a choice: a background
+`URLSession` transfers with the app suspended or killed and relaunches it to
+report, so there is nothing for a coroutine to await. The queue therefore has
+a second door -- work handed over, answered later, possibly in another life of
+the process -- and the executor decides nothing at all, because after a
+restart it knows nothing. Android keeps its process alive with a foreground
+service and needs none of it.
+
+What follows from that is the honest limit: **the real behaviour is
+unverifiable in CI at any price**, which is why everything that would settle
+it is written down in stratus-app#117 for somebody with a phone, and why
+nothing here has ever run on one.
 
 It is pointed at the **origin** rather than at a mount inside it, so its file
 browser sees the generated collections as well, and a camera roll lands in
