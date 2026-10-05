@@ -261,8 +261,15 @@ the Files sidebar and in every picker, one entry per server, so any app can
 read from Stratus and save into it without knowing Stratus exists. Standard
 WebDAV underneath, so it works against any server, and reads go out as ranges
 -- a film opens by the part that is watched. It is **not** a mount: nothing
-appears under `/storage` and `java.io.File` never sees it. The iOS twin, a
-File Provider extension, is stratus-app#105.
+appears under `/storage` and `java.io.File` never sees it.
+
+**And on iOS too, through a File Provider extension** (stratus-app#105): the
+same shared half, a domain per server, and the non-replicated API rather than
+the replicated one, because that one is a sync engine and WebDAV has no change
+feed to drive it. Neither side synchronises -- no local copy of the tree, no
+offline edits, no conflicts -- they read when they are asked. What is still
+unproved there is everything that needs a signed build on a device, which
+waits on stratus-app#5.
 
 Its upload transport is negotiated: plain WebDAV `PUT` against any server,
 [tus](https://tus.io) where the server offers it, because `PUT` cannot resume and
