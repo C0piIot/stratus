@@ -110,6 +110,9 @@ OpenSubsonic.
 - Backend: https://github.com/C0piIot/stratus-backend
 - App: https://github.com/C0piIot/stratus-app
 - Board: https://github.com/users/C0piIot/projects/2
+- Demo: https://stratus-demo.dropdatabase.es -- the last green `main`, open to
+  anybody, emptied every hour and on every merge. The password is the version
+  string in its own page footer.
 
 Working:
 
