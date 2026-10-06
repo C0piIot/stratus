@@ -265,9 +265,24 @@ video half of the web UI's library, which follows the music.
 code and the platform layer as thin as it can be made, a WebDAV client proved
 against a real backend in CI, a sign-in that asks before a password would travel
 in clear, a file browser, more than one server at a time with its own backup
-settings each, and a cache of what is backed up that can be rebuilt by walking
-the server -- because the remote path is a function of the photograph, so losing
-the cache costs time and never a second upload of somebody's camera roll.
+settings each, and a record of what has been settled that can be rebuilt by
+walking the server -- because the remote path is a function of the photograph,
+so losing it costs a listing per month rather than a second upload of somebody's
+camera roll.
+
+**A backup only ever adds, and that is three rules with tests on them now**
+(stratus-app#124): deleting a photograph on the phone does not delete it on the
+server, deleting a file on the server does not delete it on the phone, and a
+file deleted on the server is not uploaded again. The first two held by accident
+-- a pass enumerates and uploads and there is no delete anywhere in it -- and
+the third needed the record to change shape, because *what the server holds* and
+*what has been settled* are the same thing until somebody deletes something and
+opposites afterwards. What the phone keeps is the second, and it only ever
+grows. The walk that recovers it had been written for exactly this and had no
+caller at all; it runs now when nothing is settled, which is a first pass and a
+lost file at once. What it cannot recover is the deletions, so one made before
+the file was lost comes back once -- the accepted price of keeping all of this
+on the phone rather than writing a marker into somebody's tree.
 
 **A certificate nothing vouches for is a question on both platforms now**
 (stratus-app#58). Most self-hosted servers present one, so refusing outright
