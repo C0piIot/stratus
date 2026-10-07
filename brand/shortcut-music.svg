@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="Music">
+  <title>Music</title>
+  <!-- One of the four shortcut icons the manifest offers on the app's own icon
+       (stratus-backend#311). The same square and the same gradient as
+       app-icon.svg, so a launcher's menu is recognisably this app, with the
+       mark behind the glyph at low opacity and the glyph itself in white.
+       Full bleed, like the app icon: what masks the corners is the launcher.
+       192 because that is the one size shipped, and everything draws it
+       smaller. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aa0ec"/>
+      <stop offset="1" stop-color="#2c6fb5"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" fill="url(#sky)"/>
+  <g transform="translate(19.2,19.2) scale(2.4)" fill="#ffffff" opacity="0.18">
+    <rect x="26" y="14" width="28" height="9" rx="4.5"/>
+    <rect x="10" y="27" width="44" height="9" rx="4.5"/>
+    <rect x="10" y="40" width="28" height="9" rx="4.5"/>
+  </g>
+  <g transform="translate(48,48)" fill="#ffffff">
+    <path d="M41 10h8v56h-8z"/>
+    <path d="M49 10c18 6 28 15 28 28 0-8-10-16-28-21z"/>
+    <ellipse cx="28" cy="70" rx="18" ry="13" transform="rotate(-18 28 70)"/>
+  </g>
+</svg>
