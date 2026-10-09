@@ -267,11 +267,12 @@ video half of the web UI's library, which follows the music.
 (stratus-app#20). A Kotlin Multiplatform project with the decisions in shared
 code and the platform layer as thin as it can be made, a WebDAV client proved
 against a real backend in CI, a sign-in that asks before a password would travel
-in clear, a file browser, more than one server at a time with its own backup
-settings each, and a record of what has been settled that can be rebuilt by
-walking the server -- because the remote path is a function of the photograph,
-so losing it costs a listing per month rather than a second upload of somebody's
-camera roll.
+in clear, a file browser, **one server at a time** (stratus-app#131 -- several
+was tried and the thing it broke was the one question the app exists to answer,
+"is my backup working?", which stopped having a single answer), and a record of
+what has been settled that can be rebuilt by walking the server -- because the
+remote path is a function of the photograph, so losing it costs a listing per
+month rather than a second upload of somebody's camera roll.
 
 **A backup only ever adds, and that is three rules with tests on them now**
 (stratus-app#124): deleting a photograph on the phone does not delete it on the
