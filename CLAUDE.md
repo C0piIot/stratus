@@ -134,12 +134,13 @@ Working:
   tripped over it (stratus-backend#285).
 - **One WebDAV namespace for the whole origin**, behind HTTP Basic with a
   global rate limit on failed logins, mounted only when credentials are
-  configured. The root is a read-only collection listing `files/`, `photos/`
-  and `playlists/`, and the user's tree is `/files/` -- which is the same URL
-  the web UI serves a folder and a file at. What tells the two protocols apart
-  is the method and nothing else: a browser cannot send `PROPFIND` and a
-  WebDAV client does not ask for a listing with `GET`. `/dav/` is gone, and
-  the price was paid once on purpose, before there was a release.
+  configured. The root is a read-only collection listing `files/`, `music/`,
+  `photos/`, `playlists/`, `trash/` and `videos/`, and the user's tree is
+  `/files/` -- which is the same URL the web UI serves a folder and a file at.
+  What tells the two protocols apart is the method and nothing else: a browser
+  cannot send `PROPFIND` and a WebDAV client does not ask for a listing with
+  `GET`. `/dav/` is gone, and the price was paid once on purpose, before there
+  was a release.
 - OpenSubsonic at `/rest/`, browsing by tag and by folder, search, the album
   lists a home screen is made of, streaming, cover art, stars and ratings on
   songs, albums and artists, play counts from `scrobble`, and playlists -- over
@@ -192,7 +193,7 @@ Working:
   statement into two per row. What is not in it is a place: a photograph knows
   where it was taken as two numbers, and turning those into "Lisbon" is a
   service somewhere else.
-- A trash at `/trash`, because deleting a camera roll by accident is the one
+- A trash at `/trash/`, because deleting a camera roll by accident is the one
   mistake a personal cloud has to survive. A delete moves the rows into a table
   of their own and **touches no bytes at all** -- the blob stays where it was
   written, so deleting still costs nothing and frees nothing -- and the page
@@ -214,6 +215,16 @@ Working:
   index that went wrong; what the month buys is time to fix it. Thumbnails and
   other generated files are still destroyed on sight, because they can be made
   again.
+
+  **And it is a door rather than somewhere you end up** (stratus-backend#323):
+  an entry in the user menu beside Status, and that same address as a
+  read-only collection beside `files/`, `photos/` and the rest -- one folder per
+  deletion, named by what was deleted, holding the tree as it was. Reading one
+  of those files is the file, served from the blob the deletion never moved,
+  so a single photograph comes out of an accident by being copied rather than
+  by a thousand being put back. What the sweep found is not in it: a blob with
+  no path has no name to be listed under, which is a thing the page can say in
+  a sentence and a collection cannot.
 - **A Nextcloud instance adopted without moving a byte** (stratus-backend#24).
   Nextcloud on S3 names its objects `urn:oid:<fileid>` and keeps the whole tree
   in its database, exactly as this server does, so a migration is a read and a
