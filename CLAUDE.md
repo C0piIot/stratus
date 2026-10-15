@@ -155,8 +155,10 @@ Working:
   upload itself rather than found on the next pass, with `/status` reporting how
   much of the library has been read. An MP4 or QuickTime video is read where it
   lies, over ranges, instead of being downloaded to be probed; every other
-  container still gets a local copy first. Thumbnails are made on first request
-  and kept as derived blobs the same sweep collects.
+  container still gets a local copy first. Thumbnails are the same pass's second
+  half -- made for a file as it is indexed and for the rest of the library by a
+  query behind it, newest first, and on request for whatever that has not
+  reached -- and kept as derived blobs the same sweep collects.
 - A web UI at `/`: sign in, walk the tree, download a file, upload one, make a
   folder, rename and delete, and ask any file what is known about it -- the
   file row's half and the indexer's, by kind, fetched when the button is pressed
