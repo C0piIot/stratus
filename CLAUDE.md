@@ -267,6 +267,16 @@ Working:
   page with a player per track, read from the tags. A track played to the end
   counts through OpenSubsonic's own `scrobble`, called by htmx with the session;
   with JavaScript off it plays uncounted. One track at a time, no follow-on.
+- **Music metadata from outside, opt-in** (stratus-backend#217):
+  `STRATUS_MUSIC_LOOKUP=on` starts a paced background pass that asks
+  MusicBrainz which record an album is, the Cover Art Archive for its front
+  cover where neither the folder nor the tag has one, and LRCLIB for a
+  track's words. Off by default because on means tags leave the machine, and
+  the README says exactly what is sent to whom. Nothing is ever written into a
+  file: rows beside the library and a derived object the sweep already knows
+  how to collect. It feeds `getCoverArt`, `getLyricsBySongId` and
+  `getAlbumInfo2` on the Subsonic side and the album page on the web. Out on
+  purpose: fingerprinting, keyed services, biographies, and correcting tags.
 - One migration per engine, edited in place and applied at startup: before the
   first release the schema is rewritten rather than migrated, so a database
   from an older image is refused at startup instead of being run against. A
