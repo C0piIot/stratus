@@ -296,9 +296,12 @@ Working:
   how to collect. It feeds `getCoverArt`, `getLyricsBySongId` and
   `getAlbumInfo2` on the Subsonic side and the album page on the web. Out on
   purpose: fingerprinting, keyed services, biographies, and correcting tags.
-- One migration per engine, edited in place and applied at startup: before the
-  first release the schema is rewritten rather than migrated, so a database
-  from an older image is refused at startup instead of being run against. A
+- Migrations per engine, applied at startup under the engine's own lock, and
+  **added, never edited**: the schema was rewritten in place once, before
+  anything was deployed (stratus-backend#269), and has grown a numbered file at
+  a time since. A database newer than the build is refused at startup rather
+  than run against, so rolling an image back past a migration is a container
+  that will not start -- which is why a release is taken on the demo first. A
   request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
