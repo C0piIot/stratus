@@ -260,8 +260,10 @@ Working:
   than its first date, and tasks are refused rather than stored and lost to
   every query (stratus-backend#79). Proved with go-webdav's own client; no
   real one has been pointed at it yet, and DAVx5's `MKCALENDAR` is
-  stratus-backend#399. The schema already carries `sync-collection`'s counter
-  and tombstones; the `REPORT` over them is next.
+  stratus-backend#399. A client syncs by token (`sync-collection`), answered
+  in front of the library from a counter and tombstones the schema keeps;
+  a deletion is remembered thirty days, after which a stale token costs the
+  client one listing.
 
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
@@ -296,8 +298,7 @@ Working:
   request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: `sync-collection`, tasks and the calendar view over CalDAV,
-and sharing. Nor the
+Not written yet: tasks and the calendar view over CalDAV, and sharing. Nor the
 video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
