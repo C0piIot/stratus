@@ -59,7 +59,7 @@ Repos in this workspace:
 | CalDAV | calendar, tasks, journal | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
-| Web UI | login, browse, upload, download, rename and delete files today; the calendar later | any browser |
+| Web UI | login, browse, upload, download, rename and delete files; a month of a calendar, read-only | any browser |
 | CardDAV | contacts | *later* |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
@@ -307,7 +307,13 @@ Working:
   request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: the calendar view, and sharing. Nor the
+**The web UI has a calendar now** (stratus-backend#111): a month of one
+calendar, read-only and without a script, at the calendar's own address --
+the CalDAV collection to a client and the page to a browser, as `/files/` is
+-- drawn in the server's zone, `TZ`, because a page with no script cannot ask
+the browser for its own.
+
+Not written yet: sharing, and editing the calendar from the web. Nor the
 video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
