@@ -256,8 +256,10 @@ Working:
   segments -- principal, home set, calendar, object -- and the iCalendar is
   stored as the server encodes it rather than as the client sent it, so a
   `GET` and its ETag are the same bytes. `If-Match` is compared inside the
-  write's transaction, and a recurring event is matched by its occurrences
-  rather than its first date. Tasks and journal entries live beside events,
+  write's transaction, and a repeating event is matched by every instance it
+  has -- `RRULE`, `RDATE` and `EXDATE`, which go-ical's own reading drops
+  half of -- and handed back as those instances to a client that asks for
+  `expand` (stratus-backend#78). Tasks and journal entries live beside events,
   each calendar holding what it was made for -- DAVx5 makes a task list as a
   calendar of its own -- and a query by date finds them by RFC 4791's rules,
   which the library applies to events alone (stratus-backend#79). A client makes, renames, paints and deletes
