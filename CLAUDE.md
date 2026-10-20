@@ -56,7 +56,7 @@ Repos in this workspace:
 |---|---|---|
 | WebDAV | files, photo upload, generic sync | rclone, Finder, Nautilus, FolderSync |
 | tus | resumable upload of large files, negotiated | tus-js-client, TUSKit, tus-android-client |
-| CalDAV | calendar | DAVx5, Thunderbird, iOS/macOS |
+| CalDAV | calendar, tasks, journal | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
 | Web UI | login, browse, upload, download, rename and delete files today; the calendar later | any browser |
@@ -104,7 +104,7 @@ timeout measured in minutes, and a restart costs whoever held one a retry.
 ## Status
 
 Single user, usable from a WebDAV client, a music library over OpenSubsonic,
-and calendar events over CalDAV.
+and calendars and tasks over CalDAV.
 
 - Workspace: https://github.com/C0piIot/stratus
 - Backend: https://github.com/C0piIot/stratus-backend
@@ -134,8 +134,8 @@ Working:
   tripped over it (stratus-backend#285).
 - **One WebDAV namespace for the whole origin**, behind HTTP Basic with a
   global rate limit on failed logins, mounted only when credentials are
-  configured. The root is a read-only collection listing `files/`, `music/`,
-  `photos/`, `playlists/`, `trash/` and `videos/`, and the user's tree is
+  configured. The root is a read-only collection listing `calendars/`, `files/`,
+  `music/`, `photos/`, `playlists/`, `trash/` and `videos/`, and the user's tree is
   `/files/` -- which is the same URL the web UI serves a folder and a file at.
   What tells the two protocols apart is the method and nothing else: a browser
   cannot send `PROPFIND` and a WebDAV client does not ask for a listing with
@@ -250,15 +250,17 @@ Working:
   this has been run against it was **1358 objects**, almost all of them
   generated previews, against 674 files worth keeping.
 
-- **Calendar events over CalDAV at `/calendars/`** (stratus-backend#75), found
+- **Calendars and tasks over CalDAV at `/calendars/`** (stratus-backend#75), found
   from the bare address through `/.well-known/caldav`, with a `default`
   calendar made on first look. The layout is the library's, counted in
   segments -- principal, home set, calendar, object -- and the iCalendar is
   stored as the server encodes it rather than as the client sent it, so a
   `GET` and its ETag are the same bytes. `If-Match` is compared inside the
-  write's transaction, a recurring event is matched by its occurrences rather
-  than its first date, and tasks are refused rather than stored and lost to
-  every query (stratus-backend#79). A client makes, renames, paints and deletes
+  write's transaction, and a recurring event is matched by its occurrences
+  rather than its first date. Tasks and journal entries live beside events,
+  each calendar holding what it was made for -- DAVx5 makes a task list as a
+  calendar of its own -- and a query by date finds them by RFC 4791's rules,
+  which the library applies to events alone (stratus-backend#79). A client makes, renames, paints and deletes
   its calendars -- `MKCALENDAR`, `PROPPATCH`, `DELETE` -- all answered in front
   of a library that routes none of them (stratus-backend#399). Proved with
   go-webdav's own client; no real one has been pointed at it yet, which is
@@ -300,7 +302,7 @@ Working:
   request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: tasks and the calendar view over CalDAV, and sharing. Nor the
+Not written yet: the calendar view, and sharing. Nor the
 video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
