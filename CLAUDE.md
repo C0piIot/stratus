@@ -103,8 +103,8 @@ timeout measured in minutes, and a restart costs whoever held one a retry.
 
 ## Status
 
-Single user, usable from a WebDAV client, and a music library over
-OpenSubsonic.
+Single user, usable from a WebDAV client, a music library over OpenSubsonic,
+and calendar events over CalDAV.
 
 - Workspace: https://github.com/C0piIot/stratus
 - Backend: https://github.com/C0piIot/stratus-backend
@@ -250,6 +250,19 @@ Working:
   this has been run against it was **1358 objects**, almost all of them
   generated previews, against 674 files worth keeping.
 
+- **Calendar events over CalDAV at `/calendars/`** (stratus-backend#75), found
+  from the bare address through `/.well-known/caldav`, with a `default`
+  calendar made on first look. The layout is the library's, counted in
+  segments -- principal, home set, calendar, object -- and the iCalendar is
+  stored as the server encodes it rather than as the client sent it, so a
+  `GET` and its ETag are the same bytes. `If-Match` is compared inside the
+  write's transaction, a recurring event is matched by its occurrences rather
+  than its first date, and tasks are refused rather than stored and lost to
+  every query (stratus-backend#79). Proved with go-webdav's own client; no
+  real one has been pointed at it yet, and DAVx5's `MKCALENDAR` is
+  stratus-backend#399. The schema already carries `sync-collection`'s counter
+  and tombstones; the `REPORT` over them is next.
+
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
   scanner on a share or an SD card copied in. It is swept on an interval and a
@@ -283,7 +296,8 @@ Working:
   request log, and a container asserted from outside by the smoke suite: static binary, no shell, non-root, hardened
   runtime, data-directory and configuration failure matrices.
 
-Not written yet: CalDAV and the calendar view over it, and sharing. Nor the
+Not written yet: `sync-collection`, tasks and the calendar view over CalDAV,
+and sharing. Nor the
 video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
