@@ -258,9 +258,11 @@ Working:
   `GET` and its ETag are the same bytes. `If-Match` is compared inside the
   write's transaction, a recurring event is matched by its occurrences rather
   than its first date, and tasks are refused rather than stored and lost to
-  every query (stratus-backend#79). Proved with go-webdav's own client; no
-  real one has been pointed at it yet, and DAVx5's `MKCALENDAR` is
-  stratus-backend#399. A client syncs by token (`sync-collection`), answered
+  every query (stratus-backend#79). A client makes, renames, paints and deletes
+  its calendars -- `MKCALENDAR`, `PROPPATCH`, `DELETE` -- all answered in front
+  of a library that routes none of them (stratus-backend#399). Proved with
+  go-webdav's own client; no real one has been pointed at it yet, which is
+  what still holds #399 open. A client syncs by token (`sync-collection`), answered
   in front of the library from a counter and tombstones the schema keeps;
   a deletion is remembered thirty days, after which a stale token costs the
   client one listing.
