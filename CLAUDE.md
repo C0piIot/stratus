@@ -38,8 +38,14 @@ Repos in this workspace:
    private API is the day this principle is actually on the line.
 3. **Pluggable at exactly two seams:** metadata database and blob storage. Nothing
    else gets an abstraction layer "just in case".
-4. **Single user for now**, sharing later. Don't hardcode assumptions that block it:
-   keep an owner id on records even while it is always the same value.
+4. **Single user, and that is final.** Stratus is one person's cloud, and there
+   will be no second account: no roles, no admin and user, no preferences per
+   user, no calendar shared between people. A share link -- a URL somebody
+   without an account can open -- is not that and already exists. The
+   `owner_id` the records carry stays where it is, since taking it out is churn
+   for nothing, but nothing new needs one and nothing is designed for a second
+   user. This used to read "single user for now, sharing later"; it was
+   decided on 2026-10-21 that later does not come.
 5. **Minimal dependencies.** Prefer stdlib. Pure-Go / CGO-free build so the image
    can be `scratch` or distroless with a static binary.
 6. **One instance.** The server runs as a single process, and that is a
@@ -313,7 +319,7 @@ the CalDAV collection to a client and the page to a browser, as `/files/` is
 -- drawn in the server's zone, `TZ`, because a page with no script cannot ask
 the browser for its own.
 
-Not written yet: sharing, and editing the calendar from the web. Nor the
+Not written yet: editing the calendar from the web. Nor the
 video half of the web UI's library, which follows the music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
