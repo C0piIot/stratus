@@ -319,6 +319,15 @@ the CalDAV collection to a client and the page to a browser, as `/files/` is
 -- drawn in the server's zone, `TZ`, because a page with no script cannot ask
 the browser for its own.
 
+**Most settings can be changed from the web UI** (stratus-backend#397): a
+Settings page in the user menu for the intervals, the trash, the indexer's
+switches, music lookup, video re-encoding, the calendar's zone and the log
+level, kept in the database and in force at once with no restart. **The
+environment wins**: a variable that is set shows on the page and is not
+offered, so an install described in code runs on what it wrote. What opens the
+database and the store, the credentials and the import folder's path stay the
+environment's alone.
+
 Not written yet: editing the calendar from the web. Nor the
 video half of the web UI's library, which follows the music.
 
