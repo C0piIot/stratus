@@ -200,7 +200,10 @@ Working:
   trigger body, because the alternative turned a subtree move from one
   statement into two per row. What is not in it is a place: a photograph knows
   where it was taken as two numbers, and turning those into "Lisbon" is a
-  service somewhere else.
+  service somewhere else. **Events and contacts are in it too**
+  (stratus-backend#449), matched in Go over what the services list rather
+  than indexed by the engines -- a personal calendar is hundreds of objects --
+  with the same whole words, and accents ignored as well.
 - A trash at `/trash/`, because deleting a camera roll by accident is the one
   mistake a personal cloud has to survive. A delete moves the rows into a table
   of their own and **touches no bytes at all** -- the blob stays where it was
