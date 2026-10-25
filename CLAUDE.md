@@ -66,7 +66,7 @@ Repos in this workspace:
 | CardDAV | contacts | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
-| Web UI | login, browse, upload, download, rename and delete files; a month of a calendar, read-only; an address book, read and written | any browser |
+| Web UI | login, browse, upload, download, rename and delete files; a month of a calendar and an address book, both read and written | any browser |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
@@ -321,13 +321,15 @@ Working:
   runtime, data-directory and configuration failure matrices.
 
 **The web UI has a calendar now** (stratus-backend#111): a month of one
-calendar, read-only and without a script, at the calendar's own address --
+calendar, without a script, at the calendar's own address --
 the CalDAV collection to a client and the page to a browser, as `/files/` is
 -- drawn in the server's zone, `TZ`, because a page with no script cannot ask
 the browser for its own. **And the contacts too**, the same way: an address
 book is a list by name at its own address, and a contact is added, edited and
 deleted from forms that change only what they show of the vCard, so a web edit
-never strips what a phone put there (stratus-backend#442).
+never strips what a phone put there (stratus-backend#442). Events are written
+the same way (stratus-backend#444), a repeating one as a whole series; one
+instance on its own is stratus-backend#445.
 
 **Most settings can be changed from the web UI** (stratus-backend#397): a
 Settings page in the user menu for the intervals, the trash, the indexer's
@@ -338,8 +340,8 @@ offered, so an install described in code runs on what it wrote. What opens the
 database and the store, the credentials and the import folder's path stay the
 environment's alone.
 
-Not written yet: editing the calendar from the web. Nor the
-video half of the web UI's library, which follows the music.
+Not written yet: the video half of the web UI's library, which follows the
+music.
 
 `stratus-app` backs up a camera roll on **both** platforms now
 (stratus-app#20). A Kotlin Multiplatform project with the decisions in shared
