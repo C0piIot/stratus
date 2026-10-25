@@ -66,7 +66,7 @@ Repos in this workspace:
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
 | Web UI | login, browse, upload, download, rename and delete files; a month of a calendar, read-only | any browser |
-| CardDAV | contacts | *later* |
+| CardDAV | contacts | DAVx5, Thunderbird, iOS/macOS |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
@@ -110,7 +110,7 @@ timeout measured in minutes, and a restart costs whoever held one a retry.
 ## Status
 
 Single user, usable from a WebDAV client, a music library over OpenSubsonic,
-and calendars and tasks over CalDAV.
+calendars and tasks over CalDAV, and contacts over CardDAV.
 
 - Workspace: https://github.com/C0piIot/stratus
 - Backend: https://github.com/C0piIot/stratus-backend
@@ -140,8 +140,8 @@ Working:
   tripped over it (stratus-backend#285).
 - **One WebDAV namespace for the whole origin**, behind HTTP Basic with a
   global rate limit on failed logins, mounted only when credentials are
-  configured. The root is a read-only collection listing `calendars/`, `files/`,
-  `music/`, `photos/`, `playlists/`, `trash/` and `videos/`, and the user's tree is
+  configured. The root is a read-only collection listing `calendars/`, `contacts/`,
+  `files/`, `music/`, `photos/`, `playlists/`, `trash/` and `videos/`, and the user's tree is
   `/files/` -- which is the same URL the web UI serves a folder and a file at.
   What tells the two protocols apart is the method and nothing else: a browser
   cannot send `PROPFIND` and a WebDAV client does not ask for a listing with
@@ -276,6 +276,13 @@ Working:
   in front of the library from a counter and tombstones the schema keeps;
   a deletion is remembered thirty days, after which a stale token costs the
   client one listing.
+
+- **Contacts over CardDAV at `/contacts/`** (stratus-backend#423), the
+  calendars' twin: `/.well-known/carddav`, an address book called `contacts`
+  made on first look, the vCard stored as the server encodes it, conditional
+  writes in one transaction, a search that ignores case, and sync by token
+  through the same code the calendars use. Proved with go-webdav's own client;
+  #423 stays open until DAVx5 has synced it both ways.
 
 - A folder on the machine's own disk, `STRATUS_INCOMING_DIR`, that empties
   itself into the library: the door for what speaks none of the protocols, a
