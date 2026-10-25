@@ -63,10 +63,10 @@ Repos in this workspace:
 | WebDAV | files, photo upload, generic sync | rclone, Finder, Nautilus, FolderSync |
 | tus | resumable upload of large files, negotiated | tus-js-client, TUSKit, tus-android-client |
 | CalDAV | calendar, tasks, journal | DAVx5, Thunderbird, iOS/macOS |
+| CardDAV | contacts | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
 | Web UI | login, browse, upload, download, rename and delete files; a month of a calendar, read-only | any browser |
-| CardDAV | contacts | DAVx5, Thunderbird, iOS/macOS |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
