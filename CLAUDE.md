@@ -66,7 +66,7 @@ Repos in this workspace:
 | CardDAV | contacts | DAVx5, Thunderbird, iOS/macOS |
 | OpenSubsonic | music | Symfonium, Substreamer, DSub, Feishin |
 | HTTP range | direct video/audio streaming | any browser, VLC, mpv |
-| Web UI | login, browse, upload, download, rename and delete files; a month of a calendar and an address book, read-only | any browser |
+| Web UI | login, browse, upload, download, rename and delete files; a month of a calendar, read-only; an address book, read and written | any browser |
 | DLNA / UPnP-AV | TVs, set-top players | *later* |
 
 \* Finder needs WebDAV class 2 to mount read-write, so the server advertises it
@@ -325,7 +325,9 @@ calendar, read-only and without a script, at the calendar's own address --
 the CalDAV collection to a client and the page to a browser, as `/files/` is
 -- drawn in the server's zone, `TZ`, because a page with no script cannot ask
 the browser for its own. **And the contacts too**, the same way: an address
-book is a list by name at its own address, read-only.
+book is a list by name at its own address, and a contact is added, edited and
+deleted from forms that change only what they show of the vCard, so a web edit
+never strips what a phone put there (stratus-backend#442).
 
 **Most settings can be changed from the web UI** (stratus-backend#397): a
 Settings page in the user menu for the intervals, the trash, the indexer's
