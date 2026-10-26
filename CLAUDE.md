@@ -112,10 +112,10 @@ timeout measured in minutes, and a restart costs whoever held one a retry.
 Single user, usable from a WebDAV client, a music library over OpenSubsonic,
 calendars and tasks over CalDAV, and contacts over CardDAV.
 
-- Workspace: https://github.com/C0piIot/stratus
-- Backend: https://github.com/C0piIot/stratus-backend
-- App: https://github.com/C0piIot/stratus-app
-- Board: https://github.com/users/C0piIot/projects/2
+- Workspace: https://github.com/stratus-private-cloud/stratus
+- Backend: https://github.com/stratus-private-cloud/stratus-backend
+- App: https://github.com/stratus-private-cloud/stratus-app
+- Board: https://github.com/orgs/stratus-private-cloud/projects/1
 - Demo: https://stratus-demo.dropdatabase.es -- the last green `main`, open to
   anybody, emptied every hour and on every merge. The password is the version
   string in its own page footer.
