@@ -112,7 +112,8 @@ timeout measured in minutes, and a restart costs whoever held one a retry.
 Single user, usable from a WebDAV client, a music library over OpenSubsonic,
 calendars and tasks over CalDAV, and contacts over CardDAV.
 
-- Workspace: https://github.com/stratus-private-cloud/stratus
+- Workspace: https://github.com/stratus-private-cloud/.github -- the
+  organisation's special repository, so `profile/README.md` is its front page
 - Backend: https://github.com/stratus-private-cloud/stratus-backend
 - App: https://github.com/stratus-private-cloud/stratus-app
 - Board: https://github.com/orgs/stratus-private-cloud/projects/1
